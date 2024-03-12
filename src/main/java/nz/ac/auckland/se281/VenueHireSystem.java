@@ -55,12 +55,20 @@ public class VenueHireSystem {
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     // TODO implement this method
-    venueList.get(0).add(venueName);
-    venueList.get(1).add(venueCode);
-    venueList.get(2).add(capacityInput);
-    venueList.get(3).add(hireFeeInput);
+    
+    if (venueName.isEmpty()) {
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+    }
+    else { // If all arguments are valid, add them to venueList
+      venueList.get(0).add(venueName);
+      venueList.get(1).add(venueCode);
+      venueList.get(2).add(capacityInput);
+      venueList.get(3).add(hireFeeInput);
+  
+      MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
+  
+    }
 
-    MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
 
   public void setSystemDate(String dateInput) {
