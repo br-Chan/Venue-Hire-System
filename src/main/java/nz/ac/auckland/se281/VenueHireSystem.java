@@ -72,11 +72,11 @@ public class VenueHireSystem {
 
     // If the capacity or hire fee is not a positive number...
     // TODO add checks for positive number, possibly change function of isInt with >2 outputs
-    else if (!isInt(capacityInput)) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
+    else if (!(checkPosInt(capacityInput) == "isPosNumber")) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", checkPosInt(capacityInput));
     }
-    else if (!isInt(hireFeeInput)) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
+    else if (!(checkPosInt(hireFeeInput) == "isPosNumber")) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", checkPosInt(hireFeeInput));
     }
 
     // If all arguments are valid, add them to the system's arraylists
@@ -126,18 +126,21 @@ public class VenueHireSystem {
 
   //New methods implemented by me below:
 
-  //This method tests if the string input is a number, returns true if it is.
-  public boolean isInt(String testString) {
+  //This method checks if the string input is a positive number, returns one of 3 output strings.
+  public String checkPosInt(String testString) {
     if (testString.isEmpty()) {
-      return false;
+      return "";
     }
     try {
       int n = Integer.parseInt(testString);
     } catch (NumberFormatException e) {
-      return false;
+      return "";
+    }
+    if (Integer.parseInt(testString) <= 0) {
+      return " positive";
     }
 
-    //If the string isn't empty, and it can be converted to an integer...
-    return true;
+    //If the string is a number and is positive
+    return "isPosNumber";
   }
 }
