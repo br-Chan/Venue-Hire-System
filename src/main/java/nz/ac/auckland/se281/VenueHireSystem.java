@@ -32,6 +32,11 @@ public class VenueHireSystem {
 
   public void printVenues() {
     // TODO implement this method
+    //Use if statement to check if arraylist nameList is empty; if it is, the other arraylists are empty and
+    //there are no venues, so print relevant message.
+    if (nameList.isEmpty()) {
+      MessageCli.NO_VENUES.printMessage();
+    }
   }
 
   public void createVenue(
