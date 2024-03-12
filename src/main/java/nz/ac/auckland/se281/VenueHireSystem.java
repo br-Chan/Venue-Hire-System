@@ -4,7 +4,7 @@ import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 import java.util.ArrayList;
-//import java.util.List;
+// import java.util.List;
 
 public class VenueHireSystem {
   ArrayList<String> nameList;
@@ -15,13 +15,13 @@ public class VenueHireSystem {
   ArrayList<ArrayList<String>> venueList;
 
   public VenueHireSystem() {
-    //4 arraylists of the venues' data.
+    // 4 arraylists of the venues' data.
     nameList = new ArrayList<String>();
     codeList = new ArrayList<String>();
     capList = new ArrayList<String>();
     feeList = new ArrayList<String>();
 
-    //Arraylist containing the 4 arraylists of the venues' data in order of their arguments in createVenue.
+    // Arraylist containing the 4 arraylists of the venues' data in order of their arguments in createVenue.
     venueList = new ArrayList<ArrayList<String>>();
     venueList.add(nameList);
     venueList.add(codeList);
@@ -32,10 +32,23 @@ public class VenueHireSystem {
 
   public void printVenues() {
     // TODO implement this method
-    //Use if statement to check if arraylist nameList is empty; if it is, the other arraylists are empty and
-    //there are no venues, so print relevant message.
-    if (nameList.isEmpty()) {
+
+    int venueCount = nameList.size(); // number of venues in the system
+
+    // Check the number of venues in the system by using nameList.
+    // If nameList has n elements, as will the other 3 arraylists, there are n venues.
+    if (nameList.isEmpty()) { // if there are no venues in the system...
       MessageCli.NO_VENUES.printMessage();
+    }
+    else if (venueCount == 1) { // if there is 1 venue in the system...
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+    }
+    else if (venueCount > 1 && venueCount < 10) { // if there are 2-9 venues in the system...
+      MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venueCount), "s");
+      //TODO: fix the printed number of venues to be in words (i.e. one, two, three) and not int
+    }
+    else if (venueCount >= 10) { // if there are more than 10 venues in the system...
+      MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venueCount), "s");
     }
   }
 
@@ -45,7 +58,7 @@ public class VenueHireSystem {
     venueList.get(0).add(venueName);
     venueList.get(1).add(venueCode);
     venueList.get(2).add(capacityInput);
-    venueList.get(3).add(hireFeeInput); //COMMIT WITH MESSAGE FIRST
+    venueList.get(3).add(hireFeeInput);
 
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
