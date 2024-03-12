@@ -22,6 +22,7 @@ public class VenueHireSystem {
     feeList = new ArrayList<String>();
 
     // Arraylist containing the 4 arraylists of the venues' data in order of their arguments in createVenue.
+    // TODO decide if the venueList arraylist is needed at all
     venueList = new ArrayList<ArrayList<String>>();
     venueList.add(nameList);
     venueList.add(codeList);
@@ -37,6 +38,7 @@ public class VenueHireSystem {
 
     // Check the number of venues in the system by using nameList.
     // If nameList has n elements, as will the other 3 arraylists, there are n venues.
+
     if (nameList.isEmpty()) { // if there are no venues in the system...
       MessageCli.NO_VENUES.printMessage();
     }
@@ -58,6 +60,10 @@ public class VenueHireSystem {
     
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+    }
+    else if (codeList.contains(venueCode)) { // If the venue code already exists in system...
+      int repeatCodeIndex = codeList.indexOf(venueCode); //finds the venue containing repeated venue code
+      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, nameList.get(repeatCodeIndex));
     }
     else { // If all arguments are valid, add them to venueList
       venueList.get(0).add(venueName);
