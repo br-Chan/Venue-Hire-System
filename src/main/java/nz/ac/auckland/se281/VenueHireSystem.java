@@ -64,7 +64,7 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
     }
 
-    // If the venue code already exists in system...
+    // If the venue code already exists in the system...
     else if (codeList.contains(venueCode)) { 
       int repeatCodeIndex = codeList.indexOf(venueCode); //finds the venue containing repeated venue code
       MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, nameList.get(repeatCodeIndex));
@@ -78,7 +78,9 @@ public class VenueHireSystem {
     else if (!isInt(hireFeeInput)) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
     }
-    else { // If all arguments are valid, add them to venueList
+
+    // If all arguments are valid, add them to the system's arraylists
+    else {
       nameList.add(venueName);
       codeList.add(venueCode);
       capList.add(capacityInput);
