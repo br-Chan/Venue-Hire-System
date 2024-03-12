@@ -63,9 +63,20 @@ public class VenueHireSystem {
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
     }
-    else if (codeList.contains(venueCode)) { // If the venue code already exists in system...
+
+    // If the venue code already exists in system...
+    else if (codeList.contains(venueCode)) { 
       int repeatCodeIndex = codeList.indexOf(venueCode); //finds the venue containing repeated venue code
       MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, nameList.get(repeatCodeIndex));
+    }
+
+    // If the capacity or hire fee is not a positive number...
+    // TODO add checks for positive number, possibly change function of isInt with >2 outputs
+    else if (!isInt(capacityInput)) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
+    }
+    else if (!isInt(hireFeeInput)) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
     }
     else { // If all arguments are valid, add them to venueList
       nameList.add(venueName);
@@ -109,5 +120,22 @@ public class VenueHireSystem {
 
   public void viewInvoice(String bookingReference) {
     // TODO implement this method
+  }
+
+  //New methods implemented by me below:
+
+  //This method tests if the string input is a number, returns true if it is.
+  public boolean isInt(String testString) {
+    if (testString.isEmpty()) {
+      return false;
+    }
+    try {
+      int n = Integer.parseInt(testString);
+    } catch (NumberFormatException e) {
+      return false;
+    }
+
+    //If the string isn't empty, and it can be converted to an integer...
+    return true;
   }
 }
