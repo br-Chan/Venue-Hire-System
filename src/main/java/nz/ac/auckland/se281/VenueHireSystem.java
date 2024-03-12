@@ -12,7 +12,7 @@ public class VenueHireSystem {
   ArrayList<String> capList;
   ArrayList<String> feeList;
 
-  ArrayList<ArrayList<String>> venueList;
+  //ArrayList<ArrayList<String>> venueList;
 
   public VenueHireSystem() {
     // 4 arraylists of the venues' data.
@@ -22,12 +22,14 @@ public class VenueHireSystem {
     feeList = new ArrayList<String>();
 
     // Arraylist containing the 4 arraylists of the venues' data in order of their arguments in createVenue.
-    // TODO decide if the venueList arraylist is needed at all
+    // venueList redundant, commented out.
+    /*
     venueList = new ArrayList<ArrayList<String>>();
     venueList.add(nameList);
     venueList.add(codeList);
     venueList.add(capList);
     venueList.add(feeList);
+    */
 
   }
 
@@ -66,10 +68,10 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, nameList.get(repeatCodeIndex));
     }
     else { // If all arguments are valid, add them to venueList
-      venueList.get(0).add(venueName);
-      venueList.get(1).add(venueCode);
-      venueList.get(2).add(capacityInput);
-      venueList.get(3).add(hireFeeInput);
+      nameList.add(venueName);
+      codeList.add(venueCode);
+      capList.add(capacityInput);
+      feeList.add(hireFeeInput);
   
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   
