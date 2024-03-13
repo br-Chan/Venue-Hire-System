@@ -54,6 +54,11 @@ public class VenueHireSystem {
     else if (venueCount >= 10) { // if there are more than 10 venues in the system...
       MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venueCount), "s");
     }
+
+    //List the venue(s).
+    for (int i = 0; i < venueCount; ++i) {
+      MessageCli.VENUE_ENTRY.printMessage(nameList.get(i), codeList.get(i), capList.get(i), feeList.get(i), "TODO");
+    }
   }
 
   public void createVenue(
@@ -71,7 +76,7 @@ public class VenueHireSystem {
     }
 
     // If the capacity or hire fee is not a positive number...
-    // TODO add checks for positive number, possibly change function of isInt with >2 outputs
+    // TODO streamline this to run 1 function that prints the right invalid number message per string to test
     else if (!(checkPosInt(capacityInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", checkPosInt(capacityInput));
     }
