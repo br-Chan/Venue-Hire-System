@@ -709,10 +709,59 @@ public class MainTest {
     }
 
     @Test
-    public void T4_01_invalid_capacity_not_number() throws Exception {
+    public void T4_01_three_venues_saved() throws Exception {
+      runCommands(
+      CREATE_VENUE,
+      "'Frugal Fiesta Hall'",
+      "FFH",
+      "80",
+      "250",
+      CREATE_VENUE,
+      "'Comfy Corner Events Centre'",
+      "CCEC",
+      "120",
+      "500",
+      CREATE_VENUE,
+      "'Cozy Comforts Venue'",
+      "CCV",
+      "200",
+      "500",
+      PRINT_VENUES
+      );
+
+      assertContains("Successfully created venue 'Frugal Fiesta Hall' (FFH).");
+      assertContains("Successfully created venue 'Comfy Corner Events Centre' (CCEC).");
+      assertContains("Successfully created venue 'Cozy Comforts Venue' (CCV).");
+      assertContains("There are three venues in the system:");
+      assertContains("Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee");
+      assertContains("Comfy Corner Events Centre (CCEC) - 120 people - $500 base hire fee");
+      assertContains("Cozy Comforts Venue (CCV) - 200 people - $500 base hire fee");
+    }
+
+    @Test
+    public void T4_02_invalid_capacity_not_number() throws Exception {
       runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "eighty", "50");
 
       assertContains("Venue not created: capacity must be a number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T4_03_invalid_capacity_zero() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "0", "150");
+
+      assertContains("Venue not created: capacity must be a positive number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T4_04_invalid_base_hire_negative_zero() throws Exception {
+      runCommands(
+        CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "80", "-50",
+        CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "80", "0");
+
+      assertContains("Venue not created: hire fee must be a positive number.");
+      assertContains("Venue not created: hire fee must be a positive number.");
       assertDoesNotContain("Successfully created venue", true);
     }
   }
