@@ -14,6 +14,27 @@ public class VenueHireSystem {
 
   //ArrayList<ArrayList<String>> venueList;
 
+  public enum numWord {
+    TWO("two"),
+    THREE("three"),
+    FOUR("four"),
+    FIVE("five"),
+    SIX("six"),
+    SEVEN("seven"),
+    EIGHT("eight"),
+    NINE("nine");
+
+    private final String word;
+
+    private numWord (String word) {
+      this.word = word;
+    }
+
+    public String getWord() {
+      return word;
+    }
+  }
+
   public VenueHireSystem() {
     // 4 arraylists of the venues' data.
     nameList = new ArrayList<String>();
@@ -48,7 +69,7 @@ public class VenueHireSystem {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
     }
     else if (venueCount > 1 && venueCount < 10) { // if there are 2-9 venues in the system...
-      MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venueCount), "s");
+      MessageCli.NUMBER_VENUES.printMessage("are", numToWord(venueCount), "s");
       //TODO: fix the printed number of venues to be in words (i.e. one, two, three) and not int
     }
     else if (venueCount >= 10) { // if there are more than 10 venues in the system...
@@ -129,9 +150,9 @@ public class VenueHireSystem {
     // TODO implement this method
   }
 
-  //New methods implemented by me below:
+  // ***New methods implemented by me below:***
 
-  //This method checks if the string input is a positive number, returns one of 3 output strings.
+  // This method checks if the string input is a positive number, returns one of 3 output strings.
   public String checkPosInt(String testString) {
     if (testString.isEmpty()) {
       return "";
@@ -147,5 +168,13 @@ public class VenueHireSystem {
 
     //If the string is a number and is positive
     return "isPosNumber";
+  }
+
+  // Converts number from 2 to 9 into its word form.
+  public String numToWord(int num) {
+    if (num >= 2 && num <= 9) {
+      return numWord.values()[num - 2].getWord();
+    }
+    else return "OUT_OF_RANGE";
   }
 }
