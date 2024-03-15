@@ -7,6 +7,9 @@ import java.util.ArrayList;
 // import java.util.List;
 
 public class VenueHireSystem {
+  ArrayList<Venue> venueList;
+
+  //These arraylists may become redundant.
   ArrayList<String> nameList;
   ArrayList<String> codeList;
   ArrayList<String> capList;
@@ -36,33 +39,24 @@ public class VenueHireSystem {
   }
 
   public VenueHireSystem() {
+    // Arraylist containing Venue objects.
+    venueList = new ArrayList<Venue>();
+
     // 4 arraylists of the venues' data.
     nameList = new ArrayList<String>();
     codeList = new ArrayList<String>();
     capList = new ArrayList<String>();
     feeList = new ArrayList<String>();
 
-    // Arraylist containing the 4 arraylists of the venues' data in order of their arguments in createVenue.
-    // venueList redundant, commented out.
-    /*
-    venueList = new ArrayList<ArrayList<String>>();
-    venueList.add(nameList);
-    venueList.add(codeList);
-    venueList.add(capList);
-    venueList.add(feeList);
-    */
-
   }
 
   public void printVenues() {
     // TODO implement this method
 
-    int venueCount = nameList.size(); // number of venues in the system
+    int venueCount = venueList.size(); // number of venues in the system
 
-    // Check the number of venues in the system by using nameList.
-    // If nameList has n elements, as will the other 3 arraylists, there are n venues.
-
-    if (nameList.isEmpty()) { // if there are no venues in the system...
+    // Check the number of venues in the system and print message accordingly.
+    if (venueCount == 0) { // if there are no venues in the system...
       MessageCli.NO_VENUES.printMessage();
     }
     else if (venueCount == 1) { // if there is 1 venue in the system...
@@ -70,7 +64,6 @@ public class VenueHireSystem {
     }
     else if (venueCount > 1 && venueCount < 10) { // if there are 2-9 venues in the system...
       MessageCli.NUMBER_VENUES.printMessage("are", numToWord(venueCount), "s");
-      //TODO: fix the printed number of venues to be in words (i.e. one, two, three) and not int
     }
     else if (venueCount >= 10) { // if there are more than 10 venues in the system...
       MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venueCount), "s");
@@ -78,7 +71,12 @@ public class VenueHireSystem {
 
     //List the venue(s).
     for (int i = 0; i < venueCount; ++i) {
-      MessageCli.VENUE_ENTRY.printMessage(nameList.get(i), codeList.get(i), capList.get(i), feeList.get(i), "TODO");
+      MessageCli.VENUE_ENTRY.printMessage(
+        venueList.get(i).getVenueName(),
+        venueList.get(i).getVenueCode(),
+        venueList.get(i).getCapacityInput(),
+        venueList.get(i).getHireFeeInput(),
+         "TODO");
     }
   }
 
@@ -86,35 +84,32 @@ public class VenueHireSystem {
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     // TODO implement this method
     
+    // Error if venue name argument is empty.
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+      return;
     }
 
-    // If the venue code already exists in the system...
-    else if (codeList.contains(venueCode)) { 
-      int repeatCodeIndex = codeList.indexOf(venueCode); //finds the venue containing repeated venue code
-      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, nameList.get(repeatCodeIndex));
+    // Error if venue code already exists in the system.
+    for (Venue i : venueList) {
+      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, i.getVenueName());
+      return;
     }
 
     // If the capacity or hire fee is not a positive number...
     // TODO streamline this to run 1 function that prints the right invalid number message per string to test
-    else if (!(checkPosInt(capacityInput) == "isPosNumber")) {
+    if (!(checkPosInt(capacityInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", checkPosInt(capacityInput));
+      return;
     }
     else if (!(checkPosInt(hireFeeInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", checkPosInt(hireFeeInput));
+      return;
     }
 
-    // If all arguments are valid, add them to the system's arraylists
-    else {
-      nameList.add(venueName);
-      codeList.add(venueCode);
-      capList.add(capacityInput);
-      feeList.add(hireFeeInput);
-  
-      MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
-  
-    }
+    // If all arguments are valid, create a new Venue object.
+    venueList.add(new Venue(venueName, venueCode, capacityInput, hireFeeInput));
+    MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
 
   }
 
