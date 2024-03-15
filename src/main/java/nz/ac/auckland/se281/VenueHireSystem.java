@@ -84,16 +84,18 @@ public class VenueHireSystem {
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     // TODO implement this method
     
-    // Error if venue name argument is empty.
+    // Print error message if venue name argument is empty.
     if (venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return;
     }
 
-    // Error if venue code already exists in the system.
+    // Print error message if venue code already exists in the system.
     for (Venue i : venueList) {
-      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, i.getVenueName());
-      return;
+      if (i.getVenueCode().equals(venueCode)) {
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, i.getVenueName());
+        return;
+      }
     }
 
     // If the capacity or hire fee is not a positive number...
