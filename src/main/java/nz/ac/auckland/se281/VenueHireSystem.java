@@ -9,12 +9,6 @@ import java.util.ArrayList;
 public class VenueHireSystem {
   ArrayList<Venue> venueList;
 
-  //These arraylists may become redundant.
-  ArrayList<String> nameList;
-  ArrayList<String> codeList;
-  ArrayList<String> capList;
-  ArrayList<String> feeList;
-
   //ArrayList<ArrayList<String>> venueList;
 
   public enum numWord {
@@ -41,13 +35,6 @@ public class VenueHireSystem {
   public VenueHireSystem() {
     // Arraylist containing Venue objects.
     venueList = new ArrayList<Venue>();
-
-    // 4 arraylists of the venues' data.
-    nameList = new ArrayList<String>();
-    codeList = new ArrayList<String>();
-    capList = new ArrayList<String>();
-    feeList = new ArrayList<String>();
-
   }
 
   public void printVenues() {
@@ -98,7 +85,9 @@ public class VenueHireSystem {
       }
     }
 
-    // If the capacity or hire fee is not a positive number...
+    // Print error message if capacity or hire fee is not a positive number.
+
+
     // TODO streamline this to run 1 function that prints the right invalid number message per string to test
     if (!(checkPosInt(capacityInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", checkPosInt(capacityInput));
@@ -165,6 +154,12 @@ public class VenueHireSystem {
 
     //If the string is a number and is positive
     return "isPosNumber";
+  }
+
+  public String checkErrorPosInt (String numType, String testString) {
+    // TODO implement this function to do the function of checkPosInt but also print the error message
+    // and make it more streamlined
+    return null;
   }
 
   // Converts number from 2 to 9 into its word form.
