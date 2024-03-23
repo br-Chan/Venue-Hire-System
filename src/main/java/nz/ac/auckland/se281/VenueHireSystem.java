@@ -8,8 +8,7 @@ import java.util.ArrayList;
 
 public class VenueHireSystem {
   ArrayList<Venue> venueList;
-
-  //ArrayList<ArrayList<String>> venueList;
+  String systemDate;
 
   public enum numWord {
     TWO("two"),
@@ -106,6 +105,8 @@ public class VenueHireSystem {
 
   public void setSystemDate(String dateInput) {
     // TODO implement this method
+    systemDate = dateInput;
+    MessageCli.DATE_SET.printMessage(systemDate);
   }
 
   public void printSystemDate() {
