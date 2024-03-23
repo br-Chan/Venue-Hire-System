@@ -83,12 +83,9 @@ public class VenueHireSystem {
     }
 
     // Print error message if venue code already exists in the system.
-    // TODO decide if I should use the new findVenue method instead (it was copy pasted from here)
-    for (Venue i : venueList) {
-      if (i.getVenueCode().equals(venueCode)) {
-        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, i.getVenueName());
-        return;
-      }
+    if (findVenue(venueCode) != null) {
+      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, findVenue(venueCode).getVenueName());
+      return;
     }
 
     // Print error message if capacity or hire fee is not a positive number.
