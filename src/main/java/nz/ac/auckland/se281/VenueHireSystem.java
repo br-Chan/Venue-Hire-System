@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 public class VenueHireSystem {
   ArrayList<Venue> venueList;
+
   String systemDate;
 
+  // Enum for printVenues when there are 2-9 venues to be listed.
   public enum numWord {
     TWO("two"),
     THREE("three"),
@@ -34,6 +36,8 @@ public class VenueHireSystem {
   public VenueHireSystem() {
     // Arraylist containing Venue objects.
     venueList = new ArrayList<Venue>();
+
+    systemDate = "";
   }
 
   public void printVenues() {
@@ -104,13 +108,18 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
-    // TODO implement this method
     systemDate = dateInput;
     MessageCli.DATE_SET.printMessage(systemDate);
   }
 
   public void printSystemDate() {
-    // TODO implement this method
+    // if no prior system date set, print message saying date not set. Otherwise print the date.
+    if (systemDate.isEmpty()) {
+      MessageCli.CURRENT_DATE.printMessage("not set.");
+    }
+    else {
+      MessageCli.CURRENT_DATE.printMessage(systemDate);
+    }
   }
 
   public void makeBooking(String[] options) {
