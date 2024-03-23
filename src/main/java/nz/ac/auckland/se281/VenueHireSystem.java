@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class VenueHireSystem {
   ArrayList<Venue> venueList;
+  ArrayList<Booking> bookingList;
 
   String systemDate;
 
@@ -36,6 +37,7 @@ public class VenueHireSystem {
   public VenueHireSystem() {
     // Arraylist containing Venue objects.
     venueList = new ArrayList<Venue>();
+    bookingList = new ArrayList<Booking>();
 
     systemDate = "";
   }
@@ -60,6 +62,7 @@ public class VenueHireSystem {
     }
 
     //List the venue(s).
+    // TODO research the use of an overriden toString method in the Venue class instead
     for (int i = 0; i < venueCount; ++i) {
       MessageCli.VENUE_ENTRY.printMessage(
         venueList.get(i).getVenueName(),
@@ -72,7 +75,6 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    // TODO implement this method
     
     // Print error message if venue name argument is empty.
     if (venueName.isEmpty()) {
@@ -81,6 +83,7 @@ public class VenueHireSystem {
     }
 
     // Print error message if venue code already exists in the system.
+    // TODO decide if I should use the new findVenue method instead (it was copy pasted from here)
     for (Venue i : venueList) {
       if (i.getVenueCode().equals(venueCode)) {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, i.getVenueName());
@@ -124,12 +127,22 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
     // TODO implement this method
-    // TODO Booking class
 
-    String[] dateSplit = splitDate(options[1]); // date is split into its 3 parts
+    // Declare the variables to be placed into the new Booking object
+    String bookingReference = BookingReferenceGenerator.generateBookingReference();
+    Venue bookingVenue = findVenue(options[0]);
+    String bookingDate = options[1];
+    String clientEmail = options[2];
+    int numberOfAttendees = Integer.valueOf(options[3]);
 
-    //Assume all inputs are acceptable, and print the successful booking message.
-    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage();
+    // (Currently redundant) Create an array of the date split into its 3 parts
+    String[] dateSplit = splitDate(bookingDate);
+
+    //Assume all inputs are acceptable, and make the booking.
+    bookingList.add(new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees));
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+      bookingReference, bookingVenue.getVenueName(), bookingDate, Integer.toString(numberOfAttendees)
+    );
   }
 
   public void printBookings(String venueCode) {
@@ -184,6 +197,19 @@ public class VenueHireSystem {
       return numWord.values()[num - 2].getWord();
     }
     else return "OUT_OF_RANGE";
+  }
+
+  // Returns the venue with an input code
+  private Venue findVenue(String venueCode) {
+    // Iterate through each venue in venueList and return the venue with the matching code
+    for (Venue i : venueList) {
+      if (i.getVenueCode().equals(venueCode)) {
+        return i;
+      }
+    }
+
+    //If no venue found...
+    return null;
   }
 
   // Splits date into its 3 parts and returns them as a string array.
