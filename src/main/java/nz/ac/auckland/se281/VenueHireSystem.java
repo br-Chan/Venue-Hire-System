@@ -124,12 +124,18 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
     // TODO implement this method
+    // TODO Booking class
+
+    String[] dateSplit = splitDate(options[1]); // date is split into its 3 parts
+
+    //Assume all inputs are acceptable, and print the successful booking message.
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage();
   }
 
   public void printBookings(String venueCode) {
     // TODO implement this method
   }
-
+  // TODO Abstract service class (?) with 3 sub-classes
   public void addCateringService(String bookingReference, CateringType cateringType) {
     // TODO implement this method
   }
@@ -178,5 +184,11 @@ public class VenueHireSystem {
       return numWord.values()[num - 2].getWord();
     }
     else return "OUT_OF_RANGE";
+  }
+
+  // Splits date into its 3 parts and returns them as a string array.
+  private String[] splitDate(String date) {
+    String[] dateSplit = date.split("/");
+    return dateSplit;
   }
 }
