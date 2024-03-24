@@ -4,7 +4,7 @@ import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 import java.util.ArrayList;
-// import java.util.List;
+import java.util.List;
 
 public class VenueHireSystem {
   ArrayList<Venue> venueList;
@@ -13,7 +13,7 @@ public class VenueHireSystem {
   String systemDate;
 
   // Enum for printVenues when there are 2-9 venues to be listed.
-  public enum numWord {
+  public enum NumWord {
     TWO("two"),
     THREE("three"),
     FOUR("four"),
@@ -25,7 +25,7 @@ public class VenueHireSystem {
 
     private final String word;
 
-    private numWord (String word) {
+    private NumWord(String word) {
       this.word = word;
     }
 
@@ -50,26 +50,28 @@ public class VenueHireSystem {
     // Check the number of venues in the system and print message accordingly.
     if (venueCount == 0) { // if there are no venues in the system...
       MessageCli.NO_VENUES.printMessage();
-    }
-    else if (venueCount == 1) { // if there is 1 venue in the system...
+
+    } else if (venueCount == 1) { // if there is 1 venue in the system...
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-    }
-    else if (venueCount > 1 && venueCount < 10) { // if there are 2-9 venues in the system...
+
+    } else if (venueCount > 1 && venueCount < 10) { // if there are 2-9 venues in the system...
       MessageCli.NUMBER_VENUES.printMessage("are", numToWord(venueCount), "s");
-    }
-    else if (venueCount >= 10) { // if there are more than 10 venues in the system...
+
+    } else if (venueCount >= 10) { // if there are more than 10 venues in the system...
       MessageCli.NUMBER_VENUES.printMessage("are", Integer.toString(venueCount), "s");
+
     }
 
     //List the venue(s).
     // TODO research the use of an overriden toString method in the Venue class instead
     for (int i = 0; i < venueCount; ++i) {
       MessageCli.VENUE_ENTRY.printMessage(
-        venueList.get(i).getVenueName(),
-        venueList.get(i).getVenueCode(),
-        venueList.get(i).getCapacityInput(),
-        venueList.get(i).getHireFeeInput(),
-         "TODO");
+      venueList.get(i).getVenueName(),
+      venueList.get(i).getVenueCode(),
+      venueList.get(i).getCapacityInput(),
+      venueList.get(i).getHireFeeInput(),
+      "TODO"
+      );
     }
   }
 
@@ -84,20 +86,27 @@ public class VenueHireSystem {
 
     // Print error message if venue code already exists in the system.
     if (findVenue(venueCode) != null) {
-      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, findVenue(venueCode).getVenueName());
+      MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(
+      venueCode, findVenue(venueCode).getVenueName()
+      );
       return;
     }
 
     // Print error message if capacity or hire fee is not a positive number.
 
 
-    // TODO streamline this to run 1 function that prints the right invalid number message per string to test
+    // TODO streamline this to run 1 function that prints 
+    // the right invalid number message per string to test
     if (!(checkPosInt(capacityInput) == "isPosNumber")) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", checkPosInt(capacityInput));
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(
+      "capacity", checkPosInt(capacityInput)
+      );
       return;
-    }
-    else if (!(checkPosInt(hireFeeInput) == "isPosNumber")) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", checkPosInt(hireFeeInput));
+
+    }else if (!(checkPosInt(hireFeeInput) == "isPosNumber")) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(
+      "hire fee", checkPosInt(hireFeeInput)
+      );
       return;
     }
 
@@ -116,8 +125,7 @@ public class VenueHireSystem {
     // if no prior system date set, print message saying date not set. Otherwise print the date.
     if (systemDate.isEmpty()) {
       MessageCli.CURRENT_DATE.printMessage("not set.");
-    }
-    else {
+    } else {
       MessageCli.CURRENT_DATE.printMessage(systemDate);
     }
   }
@@ -136,17 +144,21 @@ public class VenueHireSystem {
     String[] dateSplit = splitDate(bookingDate);
 
     //Assume all inputs are acceptable, and make the booking.
-    bookingList.add(new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees));
+    bookingList.add(
+    new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees)
+    );
+
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-      bookingReference, bookingVenue.getVenueName(), bookingDate, Integer.toString(numberOfAttendees)
+    bookingReference, bookingVenue.getVenueName(), bookingDate, Integer.toString(numberOfAttendees)
     );
   }
 
   public void printBookings(String venueCode) {
     // TODO implement this method
   }
-  // TODO Abstract service class (?) with 3 sub-classes
+
   public void addCateringService(String bookingReference, CateringType cateringType) {
+    // TODO Abstract service class (?) with 3 sub-classes
     // TODO implement this method
   }
 
@@ -182,18 +194,19 @@ public class VenueHireSystem {
     return "isPosNumber";
   }
 
-  public String checkErrorPosInt (String numType, String testString) {
-    // TODO implement this function to do the function of checkPosInt but also print the error message
-    // and make it more streamlined
+  public String checkErrorPosInt(String numType, String testString) {
+    // TODO implement this function to do the function of checkPosInt
+    // but also print the error message and make it more streamlined
     return null;
   }
 
   // Converts number from 2 to 9 into its word form.
   public String numToWord(int num) {
     if (num >= 2 && num <= 9) {
-      return numWord.values()[num - 2].getWord();
+      return NumWord.values()[num - 2].getWord();
+    } else {
+      return "OUT_OF_RANGE";
     }
-    else return "OUT_OF_RANGE";
   }
 
   // Returns the venue with an input code
