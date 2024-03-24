@@ -1,11 +1,11 @@
 package nz.ac.auckland.se281;
 
 public class Booking {
-  String bookingReference;
-  Venue bookingVenue;
-  String bookingDate;
-  String clientEmail;
-  int numberOfAttendees;
+  private String bookingReference;
+  private Venue bookingVenue;
+  private String bookingDate;
+  private String clientEmail;
+  private int numberOfAttendees;
 
   public Booking(
   String bookingReference, Venue bookingVenue, String bookingDate, String clientEmail, int numberOfAttendees

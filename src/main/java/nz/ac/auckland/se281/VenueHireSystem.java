@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VenueHireSystem {
-  ArrayList<Venue> venueList;
-  ArrayList<Booking> bookingList;
+  private ArrayList<Venue> venueList;
+  private ArrayList<Booking> bookingList;
 
-  String systemDate;
+  private String systemDate;
 
   // Enum for printVenues when there are 2-9 venues to be listed.
   public enum NumWord {
