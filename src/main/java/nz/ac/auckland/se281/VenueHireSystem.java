@@ -142,8 +142,22 @@ public class VenueHireSystem {
     String[] dateSplit = splitDate(bookingDate);
 
     // If attendees less than 25% or more than 100%, set them to 25 or 100% respectively.
-    if (4*numberOfAttendees < bookingVenue.getCapacity()) {
+    int quarterOfCapacity = bookingVenue.getCapacity()/4;
+    if (numberOfAttendees < quarterOfCapacity) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          Integer.toString(numberOfAttendees),
+          Integer.toString(quarterOfCapacity),
+          Integer.toString(bookingVenue.getCapacity())
+      );
+      numberOfAttendees = quarterOfCapacity;
 
+    } else if (numberOfAttendees > bookingVenue.getCapacity()) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          Integer.toString(numberOfAttendees),
+          Integer.toString(bookingVenue.getCapacity()),
+          Integer.toString(bookingVenue.getCapacity())
+      );
+      numberOfAttendees = bookingVenue.getCapacity();
     }
 
     //Assume all inputs are acceptable, and make the booking.
