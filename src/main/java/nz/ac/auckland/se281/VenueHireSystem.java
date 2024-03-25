@@ -68,8 +68,8 @@ public class VenueHireSystem {
       MessageCli.VENUE_ENTRY.printMessage(
       venueList.get(i).getVenueName(),
       venueList.get(i).getVenueCode(),
-      venueList.get(i).getCapacityInput(),
-      venueList.get(i).getHireFeeInput(),
+      Integer.toString(venueList.get(i).getCapacity()),
+      Integer.toString(venueList.get(i).getHireFee()),
       "TODO"
       );
     }
@@ -93,17 +93,15 @@ public class VenueHireSystem {
     }
 
     // Print error message if capacity or hire fee is not a positive number.
-
-
     // TODO streamline this to run 1 function that prints 
     // the right invalid number message per string to test
     if (!(checkPosInt(capacityInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(
-      "capacity", checkPosInt(capacityInput)
+          "capacity", checkPosInt(capacityInput)
       );
       return;
 
-    }else if (!(checkPosInt(hireFeeInput) == "isPosNumber")) {
+    } else if (!(checkPosInt(hireFeeInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(
       "hire fee", checkPosInt(hireFeeInput)
       );
@@ -111,7 +109,7 @@ public class VenueHireSystem {
     }
 
     // If all arguments are valid, create a new Venue object.
-    venueList.add(new Venue(venueName, venueCode, capacityInput, hireFeeInput));
+    venueList.add(new Venue(venueName, venueCode, Integer.valueOf(capacityInput), Integer.valueOf(hireFeeInput)));
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
 
   }
@@ -143,13 +141,18 @@ public class VenueHireSystem {
     // (Currently redundant) Create an array of the date split into its 3 parts
     String[] dateSplit = splitDate(bookingDate);
 
+    // If attendees less than 25% or more than 100%, set them to 25 or 100% respectively.
+    if (4*numberOfAttendees < bookingVenue.getCapacity()) {
+
+    }
+
     //Assume all inputs are acceptable, and make the booking.
     bookingList.add(
-    new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees)
+        new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees)
     );
 
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-    bookingReference, bookingVenue.getVenueName(), bookingDate, Integer.toString(numberOfAttendees)
+        bookingReference, bookingVenue.getVenueName(), bookingDate, Integer.toString(numberOfAttendees)
     );
   }
 
