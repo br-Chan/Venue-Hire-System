@@ -131,7 +131,7 @@ public class VenueHireSystem {
   public void makeBooking(String[] options) {
     // TODO implement this method
 
-    // Use if-else statements to check if booking should NOT be made, return.
+    // Use if statements to check if booking should NOT be made, return.
     if (systemDate == null) {
       // If the system date is not set...
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
@@ -141,13 +141,19 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
-    // TODO If the venue code doesn't exist...
+
+    // If the venue code doesn't exist...
+    Venue bookingVenue = findVenue(options[0]);
+    if (bookingVenue == null) {
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+      return;
+    }
+
     // TODO If the bookingDate is in the past... (place this if statement 2nd)
     // TODO If the venue is already booked...
 
-    // Declare the variables to be placed into the new Booking object
+    // Declare the variables to be placed into the new Booking object (reposition as necessary)
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
-    Venue bookingVenue = findVenue(options[0]);
     String bookingDate = options[1];
     String clientEmail = options[2];
     int numberOfAttendees = Integer.valueOf(options[3]);
@@ -240,7 +246,7 @@ public class VenueHireSystem {
     }
   }
 
-  // Returns the venue with an input code
+  // Returns the venue that has the venue code input.
   private Venue findVenue(String venueCode) {
     // Iterate through each venue in venueList and return the venue with the matching code
     for (Venue i : venueList) {

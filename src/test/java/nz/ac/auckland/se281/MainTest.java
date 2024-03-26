@@ -776,7 +776,7 @@ public class MainTest {
           options("LOL", "27/02/2024", "client001@email.com", "230")));
 
         assertContains("Booking not made: there is no venue with code 'LOL'.");
-        assertDoesNotContain("Successfully created venue", true);
+        assertDoesNotContain("Successfully created booking", true);
 
     }
 
