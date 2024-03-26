@@ -131,9 +131,14 @@ public class VenueHireSystem {
   public void makeBooking(String[] options) {
     // TODO implement this method
 
-    // If the system date is not set...
+    // Use if-else statements to check if booking should NOT be made, return.
     if (systemDate == null) {
+      // If the system date is not set...
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
+    } else if (venueList.size() == 0) {
+      // If there are no venues in the system...
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
 
