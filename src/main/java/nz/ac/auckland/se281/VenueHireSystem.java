@@ -141,6 +141,9 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
+    // TODO If the venue code doesn't exist...
+    // TODO If the bookingDate is in the past... (place this if statement 2nd)
+    // TODO If the venue is already booked...
 
     // Declare the variables to be placed into the new Booking object
     String bookingReference = BookingReferenceGenerator.generateBookingReference();

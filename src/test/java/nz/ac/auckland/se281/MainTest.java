@@ -764,6 +764,91 @@ public class MainTest {
       assertContains("Venue not created: hire fee must be a positive number.");
       assertDoesNotContain("Successfully created venue", true);
     }
+
+    @Test
+    public void T4_05_make_booking_venue_code_doesnt_exist() throws Exception {
+      runCommands(
+         unpack(
+          CREATE_TEN_VENUES,
+          SET_DATE,
+          "26/02/2024", //
+          MAKE_BOOKING,
+          options("LOL", "27/02/2024", "client001@email.com", "230")));
+
+        assertContains("Booking not made: there is no venue with code 'LOL'.");
+        assertDoesNotContain("Successfully created venue", true);
+
+    }
+
+    @Test
+    public void T4_06_make_booking_year_in_past() throws Exception {
+      runCommands(
+         unpack(
+          CREATE_TEN_VENUES,
+          SET_DATE,
+          "26/02/2024", //
+          MAKE_BOOKING,
+          options("GGG", "26/02/2023", "client001@email.com", "230")));
+
+      assertContains("Booking not made: '26/02/2023' is in the past (system date is 26/02/2024).");
+      assertDoesNotContain("Successfully created booking", true);
+    }
+
+    @Test
+    public void T4_07_make_booking_month_in_past() throws Exception {
+      runCommands(
+         unpack(
+          CREATE_TEN_VENUES,
+          SET_DATE,
+          "26/02/2024", //
+          MAKE_BOOKING,
+          options("GGG", "26/01/2024", "client001@email.com", "230")));
+
+      assertContains("Booking not made: '26/01/2024' is in the past (system date is 26/02/2024).");
+      assertDoesNotContain("Successfully created booking", true);
+    }
+
+    @Test
+    public void T4_08_make_booking_day_in_past() throws Exception {
+      runCommands(
+         unpack(
+          CREATE_TEN_VENUES,
+          SET_DATE,
+          "26/02/2024", //
+          MAKE_BOOKING,
+          options("GGG", "25/02/2024", "client001@email.com", "230")));
+
+      assertContains("Booking not made: '25/02/2024' is in the past (system date is 26/02/2024).");
+      assertDoesNotContain("Successfully created booking", true);
+    }
+
+    @Test
+    public void T4_09_make_booking_acceptable_date_configurations() throws Exception {
+      runCommands(
+         unpack(
+          CREATE_TEN_VENUES,
+          SET_DATE,
+          "26/02/2024", //
+          MAKE_BOOKING, // early day, later month
+          options("GGG", "25/03/2024", "client001@email.com", "230"),
+          MAKE_BOOKING, // early month, later year
+          options("GGG", "26/01/2025", "client001@email.com", "230"),
+          MAKE_BOOKING, // early day, later year
+          options("GGG", "25/02/2025", "client001@email.com", "230"),
+          MAKE_BOOKING, // early day, early month, later year
+          options("GGG", "25/01/2025", "client001@email.com", "230"),
+          MAKE_BOOKING, // later everything
+          options("GGG", "31/12/9999", "client001@email.com", "230"),
+          MAKE_BOOKING, // early everything
+          options("GGG", "01/01/2001", "client001@email.com", "230")));
+
+          assertContains("Successfully created booking 'HUD14D8O'");
+          assertContains("Successfully created booking 'ZP4HRCZ4'");
+          assertContains("Successfully created booking '28GJARMV'");
+          assertContains("Successfully created booking 'ISXW7L6G'");
+          assertContains("Successfully created booking 'ALR0TCXE'");
+          assertContains("Booking not made: '01/01/2001' is in the past (system date is 26/02/2024).");
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =
