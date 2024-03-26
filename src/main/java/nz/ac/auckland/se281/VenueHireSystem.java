@@ -128,29 +128,47 @@ public class VenueHireSystem {
     }
   }
 
+  // Checks conditions, makes the booking if all are met.
   public void makeBooking(String[] options) {
     // TODO implement this method
 
-    // Use if statements to check if booking should NOT be made, return.
+    // CONDITION 1: Return if the system date is not set.
     if (systemDate == null) {
-      // If the system date is not set...
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
-    } else if (venueList.size() == 0) {
+    }
+
+    // Take booking & system dates and create arrays of the dates split into their 3 parts.
+    String bookingDate = options[1];
+    String[] bookingDateSplit = splitDate(bookingDate);
+    String[] systemDateSplit = splitDate(systemDate);
+
+    // CONDITION 2: Return if the booking date is in the past.
+    for (int i = 2; i >= 0; --i) {
+      if (bookingDateSplit[i].equals(systemDateSplit[i])) {
+        continue; // they're the same, move on to the next part.
+      } else if (Integer.valueOf(bookingDateSplit[i]) < Integer.valueOf(systemDateSplit[i])) {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate); //put arguments here
+        return; // booking date is in the past.
+      } else {
+        break; // booking date is in the future.
+      }
+    }
+
+    // CONDITION 3: Return if there are no venues in the system.
+    if (venueList.size() == 0) {
       // If there are no venues in the system...
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
 
-    String bookingDate = options[1]; //TODO relocate intialisation
-
     Venue bookingVenue = findVenue(options[0]);
     if (bookingVenue == null) {
-      // If the venue code doesn't exist...
+      // CONDITION 4: Return if the venue code doesn't exist.
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
       return;
     } else if (bookingVenue.isBookedOnDate(bookingDate)) {
-      // If the venue already has a booking for the booking date...
+      // CONDITION 5: Return if the venue already has a booking for the booking date.
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
           bookingVenue.getVenueName(),
           bookingDate
@@ -158,17 +176,13 @@ public class VenueHireSystem {
       return;
     }
 
-    // TODO If the bookingDate is in the past... (place this if statement 2nd)
 
     // Declare the variables to be placed into the new Booking object (reposition as necessary)
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
     String clientEmail = options[2];
     int numberOfAttendees = Integer.valueOf(options[3]);
 
-    // (Currently redundant) Create an array of the date split into its 3 parts
-    String[] dateSplit = splitDate(bookingDate);
-
-    // If attendees less than 25% or more than 100%, set them to 25 or 100% respectively.
+    // If attendees less than 25% or more than 100%, set them to 25% or 100% respectively.
     int quarterOfCapacity = bookingVenue.getCapacity()/4;
     if (numberOfAttendees < quarterOfCapacity) {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
