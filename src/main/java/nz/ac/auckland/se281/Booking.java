@@ -16,5 +16,11 @@ public class Booking {
     this.clientEmail = clientEmail;
     this.numberOfAttendees = numberOfAttendees;
   }
+
+  //TODO create more getters and setters
+
+  public String getBookingDate() {
+    return bookingDate;
+  }
   
 }

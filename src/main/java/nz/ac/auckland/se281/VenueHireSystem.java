@@ -142,19 +142,26 @@ public class VenueHireSystem {
       return;
     }
 
-    // If the venue code doesn't exist...
+    String bookingDate = options[1]; //TODO relocate intialisation
+
     Venue bookingVenue = findVenue(options[0]);
     if (bookingVenue == null) {
+      // If the venue code doesn't exist...
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+      return;
+    } else if (bookingVenue.isBookedOnDate(bookingDate)) {
+      // If the venue already has a booking for the booking date...
+      MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
+          bookingVenue.getVenueName(),
+          bookingDate
+      );
       return;
     }
 
     // TODO If the bookingDate is in the past... (place this if statement 2nd)
-    // TODO If the venue is already booked...
 
     // Declare the variables to be placed into the new Booking object (reposition as necessary)
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
-    String bookingDate = options[1];
     String clientEmail = options[2];
     int numberOfAttendees = Integer.valueOf(options[3]);
 
@@ -180,10 +187,12 @@ public class VenueHireSystem {
       numberOfAttendees = bookingVenue.getCapacity();
     }
 
-    //Assume all inputs are acceptable, and make the booking.
+    // Make the booking and add it to the venue object's arraylist of bookings.
     bookingList.add(
         new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees)
     );
+    bookingVenue.addBookingToVenue(bookingList.get(bookingList.size()-1));
+
 
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         bookingReference, bookingVenue.getVenueName(), bookingDate, Integer.toString(numberOfAttendees)
