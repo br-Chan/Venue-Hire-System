@@ -39,7 +39,7 @@ public class VenueHireSystem {
     venueList = new ArrayList<Venue>();
     bookingList = new ArrayList<Booking>();
 
-    systemDate = "";
+    systemDate = null;
   }
 
   public void printVenues() {
@@ -121,7 +121,7 @@ public class VenueHireSystem {
 
   public void printSystemDate() {
     // if no prior system date set, print message saying date not set. Otherwise print the date.
-    if (systemDate.isEmpty()) {
+    if (systemDate == null) {
       MessageCli.CURRENT_DATE.printMessage("not set.");
     } else {
       MessageCli.CURRENT_DATE.printMessage(systemDate);
@@ -130,6 +130,12 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
     // TODO implement this method
+
+    // If the system date is not set...
+    if (systemDate == null) {
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
+    }
 
     // Declare the variables to be placed into the new Booking object
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
