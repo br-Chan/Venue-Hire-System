@@ -93,8 +93,6 @@ public class VenueHireSystem {
     }
 
     // Print error message if capacity or hire fee is not a positive number.
-    // TODO streamline this to run 1 function that prints 
-    // the right invalid number message per string to test
     if (!(checkPosInt(capacityInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(
           "capacity", checkPosInt(capacityInput)
@@ -157,7 +155,6 @@ public class VenueHireSystem {
 
     // CONDITION 3: Return if there are no venues in the system.
     if (venueList.size() == 0) {
-      // If there are no venues in the system...
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
@@ -177,7 +174,7 @@ public class VenueHireSystem {
     }
 
 
-    // Declare the variables to be placed into the new Booking object (reposition as necessary)
+    // Declare the remaining variables.
     String bookingReference = BookingReferenceGenerator.generateBookingReference();
     String clientEmail = options[2];
     int numberOfAttendees = Integer.valueOf(options[3]);
@@ -199,6 +196,7 @@ public class VenueHireSystem {
           Integer.toString(bookingVenue.getCapacity())
       );
       numberOfAttendees = bookingVenue.getCapacity();
+      
     }
 
     // Make the booking and add it to the venue object's arraylist of bookings.
@@ -242,7 +240,7 @@ public class VenueHireSystem {
       return "";
     }
     try {
-      int n = Integer.parseInt(testString);
+      Integer.parseInt(testString);
     } catch (NumberFormatException e) {
       return "";
     }
@@ -252,12 +250,6 @@ public class VenueHireSystem {
 
     //If the string is a number and is positive
     return "isPosNumber";
-  }
-
-  public String checkErrorPosInt(String numType, String testString) {
-    // TODO implement this function to do the function of checkPosInt
-    // but also print the error message and make it more streamlined
-    return null;
   }
 
   // Converts number from 2 to 9 into its word form.
