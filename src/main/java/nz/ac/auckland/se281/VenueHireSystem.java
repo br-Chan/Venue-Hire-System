@@ -43,8 +43,6 @@ public class VenueHireSystem {
   }
 
   public void printVenues() {
-    // TODO implement this method
-
     int venueCount = venueList.size(); // number of venues in the system
 
     // Check the number of venues in the system and print message accordingly.
@@ -101,7 +99,7 @@ public class VenueHireSystem {
 
     } else if (!(checkPosInt(hireFeeInput) == "isPosNumber")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(
-      "hire fee", checkPosInt(hireFeeInput)
+          "hire fee", checkPosInt(hireFeeInput)
       );
       return;
     }
@@ -128,8 +126,6 @@ public class VenueHireSystem {
 
   // Checks conditions, makes the booking if all are met.
   public void makeBooking(String[] options) {
-    // TODO implement this method
-
     // CONDITION 1: Return if the system date is not set.
     if (systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
@@ -145,9 +141,11 @@ public class VenueHireSystem {
     for (int i = 2; i >= 0; --i) {
       if (bookingDateSplit[i].equals(systemDateSplit[i])) {
         continue; // they're the same, move on to the next part.
+
       } else if (Integer.valueOf(bookingDateSplit[i]) < Integer.valueOf(systemDateSplit[i])) {
         MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate); //put arguments here
         return; // booking date is in the past.
+
       } else {
         break; // booking date is in the future.
       }
@@ -164,6 +162,7 @@ public class VenueHireSystem {
       // CONDITION 4: Return if the venue code doesn't exist.
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
       return;
+      
     } else if (bookingVenue.isBookedOnDate(bookingDate)) {
       // CONDITION 5: Return if the venue already has a booking for the booking date.
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
@@ -213,6 +212,8 @@ public class VenueHireSystem {
 
   public void printBookings(String venueCode) {
     // TODO implement this method
+
+    
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
