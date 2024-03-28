@@ -63,12 +63,17 @@ public class VenueHireSystem {
     //List the venue(s).
     // TODO research the use of an overriden toString method in the Venue class instead
     for (int i = 0; i < venueCount; ++i) {
+      // Check if the system date is set or not.
+      String nextAvailableDate = venueList.get(i).getNextAvailableDate();
+      if (nextAvailableDate == null) {
+        nextAvailableDate = "[Date not set]";
+      }
       MessageCli.VENUE_ENTRY.printMessage(
       venueList.get(i).getVenueName(),
       venueList.get(i).getVenueCode(),
       Integer.toString(venueList.get(i).getCapacity()),
       Integer.toString(venueList.get(i).getHireFee()),
-      "TODO"
+      nextAvailableDate
       );
     }
   }
@@ -105,7 +110,8 @@ public class VenueHireSystem {
     }
 
     // If all arguments are valid, create a new Venue object.
-    venueList.add(new Venue(venueName, venueCode, Integer.valueOf(capacityInput), Integer.valueOf(hireFeeInput)));
+    venueList.add(new Venue(
+        venueName, venueCode, Integer.valueOf(capacityInput), Integer.valueOf(hireFeeInput), systemDate));
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
 
   }
@@ -162,7 +168,7 @@ public class VenueHireSystem {
       // CONDITION 4: Return if the venue code doesn't exist.
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
       return;
-      
+
     } else if (bookingVenue.isBookedOnDate(bookingDate)) {
       // CONDITION 5: Return if the venue already has a booking for the booking date.
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(

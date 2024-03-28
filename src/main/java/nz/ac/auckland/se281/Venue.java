@@ -8,13 +8,16 @@ public class Venue {
   private int capacity;
   private int hireFee;
   private ArrayList<Booking> bookingsAtVenue;
+  private String nextAvailableDate;
 
-  public Venue(String venueName, String venueCode, int capacityInput, int hireFeeInput) {
+  public Venue(
+      String venueName, String venueCode, int capacityInput, int hireFeeInput, String systemDate) {
     this.venueName = venueName;
     this.venueCode = venueCode;
     this.capacity = capacityInput;
     this.hireFee = hireFeeInput;
     bookingsAtVenue = new ArrayList<Booking>();
+    nextAvailableDate = systemDate;
   }
 
   public String getVenueName() {
@@ -35,6 +38,10 @@ public class Venue {
 
   public ArrayList<Booking> getBookingsAtVenue() {
     return bookingsAtVenue;
+  }
+
+  public String getNextAvailableDate() {
+    return nextAvailableDate;
   }
 
   public void addBookingToVenue(Booking booking) {
