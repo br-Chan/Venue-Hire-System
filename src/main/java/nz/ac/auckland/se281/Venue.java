@@ -51,7 +51,7 @@ public class Venue {
   //Returns true if the venue already has a booking on the input date.
   public boolean isBookedOnDate(SimpleDate date) {
     for (Booking i : bookingsAtVenue) {
-      if (i.getBookingDate().equals(date)) {
+      if (i.getBookingDate().compareWith(date) == 0) {
         return true;
       }
     }

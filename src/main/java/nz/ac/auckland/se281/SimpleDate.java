@@ -30,7 +30,7 @@ public class SimpleDate {
   }
 
   // Returns 0 if equal, -1 if this is in the past, 1 is this is in the future.
-  public int compare(SimpleDate other) {
+  public int compareWith(SimpleDate other) {
     int yearsCompared = Integer.compare(this.year, other.year);
     if (yearsCompared != 0) {
       System.out.println("years differ");

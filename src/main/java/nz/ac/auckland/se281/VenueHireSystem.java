@@ -145,7 +145,7 @@ public class VenueHireSystem {
     SimpleDate bookingDate = new SimpleDate(options[1]);
 
     // CONDITION 2: Return if the booking date is in the past.
-    if (bookingDate.compare(systemDate) == -1) {
+    if (bookingDate.compareWith(systemDate) == -1) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate.toString(), systemDate.toString());
       return; // booking date is in the past.
     }
