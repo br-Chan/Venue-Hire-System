@@ -144,21 +144,10 @@ public class VenueHireSystem {
     //String bookingDate = options[1];
     SimpleDate bookingDate = new SimpleDate(options[1]);
 
-    String[] bookingDateSplit = bookingDate.splitDate();
-    String[] systemDateSplit = systemDate.splitDate();
-
     // CONDITION 2: Return if the booking date is in the past.
-    for (int i = 2; i >= 0; --i) {
-      if (bookingDateSplit[i].equals(systemDateSplit[i])) {
-        continue; // they're the same, move on to the next part.
-
-      } else if (Integer.valueOf(bookingDateSplit[i]) < Integer.valueOf(systemDateSplit[i])) {
-        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate.toString(), systemDate.toString()); //put arguments here
-        return; // booking date is in the past.
-
-      } else {
-        break; // booking date is in the future.
-      }
+    if (bookingDate.compare(systemDate) == -1) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate.toString(), systemDate.toString());
+      return; // booking date is in the past.
     }
 
     // CONDITION 3: Return if there are no venues in the system.
