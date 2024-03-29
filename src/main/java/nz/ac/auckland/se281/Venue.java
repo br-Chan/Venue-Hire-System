@@ -8,10 +8,10 @@ public class Venue {
   private int capacity;
   private int hireFee;
   private ArrayList<Booking> bookingsAtVenue;
-  private String nextAvailableDate;
+  private SimpleDate nextAvailableDate;
 
   public Venue(
-      String venueName, String venueCode, int capacityInput, int hireFeeInput, String systemDate) {
+      String venueName, String venueCode, int capacityInput, int hireFeeInput, SimpleDate systemDate) {
     this.venueName = venueName;
     this.venueCode = venueCode;
     this.capacity = capacityInput;
@@ -40,7 +40,7 @@ public class Venue {
     return bookingsAtVenue;
   }
 
-  public String getNextAvailableDate() {
+  public SimpleDate getNextAvailableDate() {
     return nextAvailableDate;
   }
 
@@ -49,7 +49,7 @@ public class Venue {
   }
 
   //Returns true if the venue already has a booking on the input date.
-  public boolean isBookedOnDate(String date) {
+  public boolean isBookedOnDate(SimpleDate date) {
     for (Booking i : bookingsAtVenue) {
       if (i.getBookingDate().equals(date)) {
         return true;

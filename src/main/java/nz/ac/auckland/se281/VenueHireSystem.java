@@ -10,7 +10,7 @@ public class VenueHireSystem {
   private ArrayList<Venue> venueList;
   private ArrayList<Booking> bookingList;
 
-  private String systemDate;
+  private SimpleDate systemDate;
 
   // Enum for printVenues when there are 2-9 venues to be listed.
   public enum NumWord {
@@ -64,9 +64,11 @@ public class VenueHireSystem {
     // TODO research the use of an overriden toString method in the Venue class instead
     for (int i = 0; i < venueCount; ++i) {
       // Check if the system date is set or not.
-      String nextAvailableDate = venueList.get(i).getNextAvailableDate();
-      if (nextAvailableDate == null) {
+      String nextAvailableDate;
+      if (systemDate == null) {
         nextAvailableDate = "[Date not set]";
+      } else {
+        nextAvailableDate = venueList.get(i).getNextAvailableDate().toString();
       }
       MessageCli.VENUE_ENTRY.printMessage(
       venueList.get(i).getVenueName(),
@@ -117,8 +119,8 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
-    systemDate = dateInput;
-    MessageCli.DATE_SET.printMessage(systemDate);
+    systemDate = new SimpleDate(dateInput);
+    MessageCli.DATE_SET.printMessage(systemDate.toString());
   }
 
   public void printSystemDate() {
@@ -126,7 +128,7 @@ public class VenueHireSystem {
     if (systemDate == null) {
       MessageCli.CURRENT_DATE.printMessage("not set.");
     } else {
-      MessageCli.CURRENT_DATE.printMessage(systemDate);
+      MessageCli.CURRENT_DATE.printMessage(systemDate.toString());
     }
   }
 
@@ -139,9 +141,11 @@ public class VenueHireSystem {
     }
 
     // Take booking & system dates and create arrays of the dates split into their 3 parts.
-    String bookingDate = options[1];
-    String[] bookingDateSplit = splitDate(bookingDate);
-    String[] systemDateSplit = splitDate(systemDate);
+    //String bookingDate = options[1];
+    SimpleDate bookingDate = new SimpleDate(options[1]);
+
+    String[] bookingDateSplit = bookingDate.splitDate();
+    String[] systemDateSplit = systemDate.splitDate();
 
     // CONDITION 2: Return if the booking date is in the past.
     for (int i = 2; i >= 0; --i) {
@@ -149,7 +153,7 @@ public class VenueHireSystem {
         continue; // they're the same, move on to the next part.
 
       } else if (Integer.valueOf(bookingDateSplit[i]) < Integer.valueOf(systemDateSplit[i])) {
-        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate); //put arguments here
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate.toString(), systemDate.toString()); //put arguments here
         return; // booking date is in the past.
 
       } else {
@@ -173,7 +177,7 @@ public class VenueHireSystem {
       // CONDITION 5: Return if the venue already has a booking for the booking date.
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
           bookingVenue.getVenueName(),
-          bookingDate
+          bookingDate.toString()
       );
       return;
     }
@@ -212,7 +216,7 @@ public class VenueHireSystem {
 
 
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-        bookingReference, bookingVenue.getVenueName(), bookingDate, Integer.toString(numberOfAttendees)
+        bookingReference, bookingVenue.getVenueName(), bookingDate.toString(), Integer.toString(numberOfAttendees)
     );
   }
 
@@ -281,9 +285,5 @@ public class VenueHireSystem {
     return null;
   }
 
-  // Splits date into its 3 parts and returns them as a string array.
-  private String[] splitDate(String date) {
-    String[] dateSplit = date.split("/");
-    return dateSplit;
-  }
+
 }
