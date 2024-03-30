@@ -129,7 +129,7 @@ public class VenueHireSystem {
 
   public void printSystemDate() {
     // if no prior system date set, print message saying date not set. Otherwise print the date.
-    if (systemDate == null) {
+    if (!systemDate.getIsSet()) {
       MessageCli.CURRENT_DATE.printMessage("not set.");
     } else {
       MessageCli.CURRENT_DATE.printMessage(systemDate.toString());
@@ -139,7 +139,7 @@ public class VenueHireSystem {
   // Checks conditions, makes the booking if all are met.
   public void makeBooking(String[] options) {
     // CONDITION 1: Return if the system date is not set.
-    if (systemDate == null) {
+    if (!systemDate.getIsSet()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }

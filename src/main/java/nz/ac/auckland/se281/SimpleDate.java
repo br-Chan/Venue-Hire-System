@@ -4,23 +4,31 @@ public class SimpleDate {
   private int day;
   private int month;
   private int year;
+  private boolean isSet;
 
   public SimpleDate() {
     day = 0;
     month = 0;
     year = 0;
+    isSet = false;
   }
 
   public SimpleDate(String dateString) {
     day = Integer.valueOf(splitDate(dateString)[0]);
     month = Integer.valueOf(splitDate(dateString)[1]);
     year = Integer.valueOf(splitDate(dateString)[2]);
+    isSet = true;
   }
 
   public SimpleDate(SimpleDate other) {
     this.day = other.day;
     this.month = other.month;
     this.year = other.year;
+    isSet = true;
+  }
+
+  public boolean getIsSet() {
+    return isSet;
   }
 
   // Splits date into its 3 parts and returns them as a string array.
