@@ -12,7 +12,7 @@ public class Booking {
   ) {
     this.bookingReference = bookingReference;
     this.bookingVenue = bookingVenue;
-    this.bookingDate = bookingDate;
+    this.bookingDate = new SimpleDate(bookingDate);
     this.clientEmail = clientEmail;
     this.numberOfAttendees = numberOfAttendees;
   }

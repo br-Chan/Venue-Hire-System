@@ -17,7 +17,7 @@ public class Venue {
     this.capacity = capacityInput;
     this.hireFee = hireFeeInput;
     bookingsAtVenue = new ArrayList<Booking>();
-    nextAvailableDate = systemDate;
+    nextAvailableDate = new SimpleDate(systemDate);
   }
 
   public String getVenueName() {
@@ -44,11 +44,28 @@ public class Venue {
     return nextAvailableDate;
   }
 
+  // Updates the next available date.
+  // System date is an input parameter but not necessarily becomes the next available date.
+  public void updateNextAvailableDate(SimpleDate systemDate) {
+    //Return with nextAvailableDate being the system date if there are no bookings.
+    if (bookingsAtVenue.size() == 0) {
+      nextAvailableDate.changeTo(systemDate);
+      return;
+    }
+
+    //If the venue is booked on the system date, check the next day until not booked.
+    while (this.isBookedOnDate(nextAvailableDate)) {
+      nextAvailableDate.incrementDay();
+    }
+
+    return;
+  }
+
   public void addBookingToVenue(Booking booking) {
     bookingsAtVenue.add(booking);
   }
 
-  //Returns true if the venue already has a booking on the input date.
+  // Returns true if the venue already has a booking on the input date.
   public boolean isBookedOnDate(SimpleDate date) {
     for (Booking i : bookingsAtVenue) {
       if (i.getBookingDate().compareWith(date) == 0) {

@@ -39,7 +39,7 @@ public class VenueHireSystem {
     venueList = new ArrayList<Venue>();
     bookingList = new ArrayList<Booking>();
 
-    systemDate = null;
+    systemDate = new SimpleDate();
   }
 
   public void printVenues() {
@@ -121,6 +121,10 @@ public class VenueHireSystem {
   public void setSystemDate(String dateInput) {
     systemDate = new SimpleDate(dateInput);
     MessageCli.DATE_SET.printMessage(systemDate.toString());
+
+    for (Venue i : venueList) {
+      i.updateNextAvailableDate(systemDate);
+    }
   }
 
   public void printSystemDate() {
@@ -202,7 +206,8 @@ public class VenueHireSystem {
         new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees)
     );
     bookingVenue.addBookingToVenue(bookingList.get(bookingList.size()-1));
-
+    
+    bookingVenue.updateNextAvailableDate(systemDate);
 
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         bookingReference, bookingVenue.getVenueName(), bookingDate.toString(), Integer.toString(numberOfAttendees)

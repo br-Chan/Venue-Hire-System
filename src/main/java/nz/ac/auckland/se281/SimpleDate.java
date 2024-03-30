@@ -5,6 +5,12 @@ public class SimpleDate {
   private int month;
   private int year;
 
+  public SimpleDate() {
+    day = 0;
+    month = 0;
+    year = 0;
+  }
+
   public SimpleDate(String dateString) {
     day = Integer.valueOf(splitDate(dateString)[0]);
     month = Integer.valueOf(splitDate(dateString)[1]);
@@ -33,23 +39,31 @@ public class SimpleDate {
   public int compareWith(SimpleDate other) {
     int yearsCompared = Integer.compare(this.year, other.year);
     if (yearsCompared != 0) {
-      System.out.println("years differ");
       return yearsCompared;
     }
 
     int monthsCompared = Integer.compare(this.month, other.month);
     if (monthsCompared != 0) {
-      System.out.println("months differ");
       return monthsCompared;
     }
     
     int daysCompared = Integer.compare(this.day, other.day);
     if (daysCompared != 0) {
-      System.out.println("months differ");
       return daysCompared;
     }
 
     return 0;
+  }
+
+  public void incrementDay() {
+    day++;
+  }
+
+  // Changes the date to be equal to the input date but not actually become the date.
+  public void changeTo(SimpleDate dateToChangeTo) {
+    this.day = dateToChangeTo.day;
+    this.month = dateToChangeTo.month;
+    this.year = dateToChangeTo.year;
   }
 
   @Override
