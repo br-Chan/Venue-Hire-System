@@ -19,8 +19,23 @@ public class Booking {
 
   //TODO create more getters and setters
 
+  public String getBookingReference() {
+    return bookingReference;
+  }
+
   public SimpleDate getBookingDate() {
     return bookingDate;
+  }
+
+  // Overridden toString method to be used in printBookings method in VenueHireSystem class.
+  @Override
+  public String toString() {
+    String bookingEntry = MessageCli.PRINT_BOOKINGS_ENTRY.getMessage(
+        getBookingReference(),
+        getBookingDate().toString()
+    );
+
+    return bookingEntry;
   }
   
 }

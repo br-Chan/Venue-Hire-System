@@ -224,10 +224,13 @@ public class VenueHireSystem {
     // CASE 2: There are no bookings for the specified venue (but venue exists).
     if (venue.getBookingsAtVenue().isEmpty()) {
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(venue.getVenueName());
+      return;
     }
 
-    // CASE 3: There is at least 1 booking in the specified venue.
-
+    // CASE 3: There is at least 1 booking for the specified venue.
+    for (Booking booking : venue.getBookingsAtVenue()) {
+      System.out.println(booking);
+    }
     
   }
 
