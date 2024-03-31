@@ -951,6 +951,18 @@ public class MainTest {
           "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
               + " 26/02/2024");
     }
+
+    @Test
+    public void T4_14_print_bookings_no_venues() throws Exception {
+      runCommands(
+          PRINT_BOOKINGS,
+          "ABC");
+
+      assertContains("Nothing to print: there is no venue with code 'ABC'.");
+      assertDoesNotContain("Bookings for '", true);
+      assertDoesNotContain("No bookings for", true);
+      assertDoesNotContain("s' on ", true);
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =

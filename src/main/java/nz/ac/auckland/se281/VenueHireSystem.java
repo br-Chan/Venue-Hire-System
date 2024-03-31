@@ -216,6 +216,10 @@ public class VenueHireSystem {
 
   public void printBookings(String venueCode) {
     // CASE 1: The venue code doesn't exist/there are no venues in the system.
+    if (venueList.isEmpty() || findVenue(venueCode) == null) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+      return;
+    }
 
     // Print the header for bookings at the venue (cases 2 & 3 always have this).
     Venue venue = findVenue(venueCode);
