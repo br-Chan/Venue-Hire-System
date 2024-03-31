@@ -138,7 +138,7 @@ public class VenueHireSystem {
 
   // Checks conditions, makes the booking if all are met.
   public void makeBooking(String[] options) {
-    // CONDITION 1: Return if the system date is not set.
+    // CONDITION 1: System date must be set.
     if (!systemDate.getIsSet()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
@@ -148,13 +148,13 @@ public class VenueHireSystem {
     //String bookingDate = options[1];
     SimpleDate bookingDate = new SimpleDate(options[1]);
 
-    // CONDITION 2: Return if the booking date is in the past.
+    // CONDITION 2: Booking date must not be in the past.
     if (bookingDate.compareWith(systemDate) == -1) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate.toString(), systemDate.toString());
       return; // booking date is in the past.
     }
 
-    // CONDITION 3: Return if there are no venues in the system.
+    // CONDITION 3: There must be at least 1 venue in the system.
     if (venueList.size() == 0) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
@@ -162,12 +162,12 @@ public class VenueHireSystem {
 
     Venue bookingVenue = findVenue(options[0]);
     if (bookingVenue == null) {
-      // CONDITION 4: Return if the venue code doesn't exist.
+      // CONDITION 4: The venue code must exist.
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
       return;
 
     } else if (bookingVenue.isBookedOnDate(bookingDate)) {
-      // CONDITION 5: Return if the venue already has a booking for the booking date.
+      // CONDITION 5: The venue must not already have a booking for the booking date.
       MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
           bookingVenue.getVenueName(),
           bookingDate.toString()
@@ -215,7 +215,18 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
+    // CASE 1: The venue code doesn't exist/there are no venues in the system.
+
+    // Print the header for bookings at the venue (cases 2 & 3 always have this).
+    Venue venue = findVenue(venueCode);
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venue.getVenueName());
+
+    // CASE 2: There are no bookings for the specified venue (but venue exists).
+    if (venue.getBookingsAtVenue().isEmpty()) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venue.getVenueName());
+    }
+
+    // CASE 3: There is at least 1 booking in the specified venue.
 
     
   }
