@@ -239,23 +239,29 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO Abstract service class (?) with 3 sub-classes
-    // TODO implement this method
+    if (checkServiceBooking("Catering", bookingReference) == true) {
+      // Create a new service.
+    }
+
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
+    if (checkServiceBooking("Service", bookingReference) == true) {
+      // Create a new service.
+    }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    if (checkServiceBooking("Floral", bookingReference) == true) {
+      // Create a new service.
+    }
   }
 
   public void viewInvoice(String bookingReference) {
     // TODO implement this method
   }
 
-  // ***New methods implemented by me below:***
+  // ***Methods implemented by me below:***
 
   // This method checks if the string input is a positive number, returns one of 3 output strings.
   public String checkPosInt(String testString) {
@@ -285,11 +291,11 @@ public class VenueHireSystem {
   }
 
   // Returns the venue that has the venue code input.
-  private Venue findVenue(String venueCode) {
+  public Venue findVenue(String venueCode) {
     // Iterate through each venue in venueList and return the venue with the matching code
-    for (Venue i : venueList) {
-      if (i.getVenueCode().equals(venueCode)) {
-        return i;
+    for (Venue venue : venueList) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        return venue;
       }
     }
 
@@ -297,5 +303,27 @@ public class VenueHireSystem {
     return null;
   }
 
+  // Returns the venue that has the booking reference input.
+  public Booking findBooking(String bookingReference) {
+    // Iterate through each booking in bookingList and return the booking with the matching reference
+    for (Booking booking : bookingList) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        return booking;
+      }
+    }
+
+    //If no venue found...
+    return null;
+  }
+
+  // Prints error message if booking reference doesn't exist and returns false, returns true if found.
+  public boolean checkServiceBooking(String serviceType, String bookingReference) {
+    if (findBooking(bookingReference) == null) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage(serviceType, bookingReference);
+      return false;
+    }
+
+    return true;
+  }
 
 }
