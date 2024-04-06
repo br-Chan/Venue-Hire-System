@@ -61,7 +61,7 @@ public class Venue {
     return;
   }
 
-  public void addBookingToVenue(Booking booking) {
+  public void addBooking(Booking booking) {
     bookingsAtVenue.add(booking);
   }
 

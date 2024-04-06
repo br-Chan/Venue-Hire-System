@@ -201,12 +201,13 @@ public class VenueHireSystem {
       
     }
 
-    // Make the booking and add it to the venue object's arraylist of bookings.
+    // Make the booking (add to system's bookingList) and add it to the venue object's arraylist of bookings.
     bookingList.add(
         new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees)
     );
-    bookingVenue.addBookingToVenue(bookingList.get(bookingList.size()-1));
+    bookingVenue.addBooking(bookingList.get(bookingList.size()-1));
     
+    // Update the venue's system date, now that a new booking has been added to it.
     bookingVenue.updateNextAvailableDate(systemDate);
 
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
@@ -240,7 +241,12 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     if (checkServiceBooking("Catering", bookingReference) == true) {
-      // Create a new service.
+      // Create a new service (add to the booking's arraylist of services).
+      Booking serviceBooking = findBooking(bookingReference);
+      serviceBooking.addService(new Catering(serviceBooking, cateringType));
+
+      // Print relevant success message.
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Catering (" + cateringType.getName() + ")", bookingReference);
     }
 
   }
