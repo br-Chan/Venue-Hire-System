@@ -963,6 +963,25 @@ public class MainTest {
       assertDoesNotContain("No bookings for", true);
       assertDoesNotContain("s' on ", true);
     }
+
+    @Test
+    public void T4_15_add_floral_service_deluxe() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "27/03/2024", "client001@email.com", "230"), //
+              ADD_FLORAL,
+              "HUD14D8O",
+              options("y")));
+
+      assertContains("Successfully added Floral (Deluxe) service to booking 'HUD14D8O'.");
+      assertDoesNotContain("(Standard)", true);
+      assertDoesNotContain("* Catering ", true);
+      assertDoesNotContain("not added", true);
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =

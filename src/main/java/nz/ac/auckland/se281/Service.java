@@ -9,6 +9,10 @@ public abstract class Service {
     this.cost = 0; // Will be changed when sub-class is constructed.
   }
 
+  public Booking getServiceBooking() {
+    return serviceBooking;
+  }
+
   public int getCost() {
     return cost;
   }

@@ -241,7 +241,7 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     if (checkServiceBooking("Catering", bookingReference) == true) {
-      // Create a new service (add to the booking's arraylist of services).
+      // Create a new catering service (add to the booking's arraylist of services).
       Booking serviceBooking = findBooking(bookingReference);
       serviceBooking.addService(new Catering(serviceBooking, cateringType));
 
@@ -252,14 +252,24 @@ public class VenueHireSystem {
   }
 
   public void addServiceMusic(String bookingReference) {
-    if (checkServiceBooking("Service", bookingReference) == true) {
-      // Create a new service.
+    if (checkServiceBooking("Music", bookingReference) == true) {
+      // Create a new music service (add to the booking's arraylist of services).
+      Booking serviceBooking = findBooking(bookingReference);
+      serviceBooking.addService(new Music(serviceBooking));
+
+      // Print relevant success message.
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
     }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     if (checkServiceBooking("Floral", bookingReference) == true) {
-      // Create a new service.
+      // Create a new floral service (add to the booking's arraylist of services).
+      Booking serviceBooking = findBooking(bookingReference);
+      serviceBooking.addService(new Floral(serviceBooking, floralType));
+
+      // Print relevant success message.
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Floral (" + floralType.getName() + ")", bookingReference);
     }
   }
 
