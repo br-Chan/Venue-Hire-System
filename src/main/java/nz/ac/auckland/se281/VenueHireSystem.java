@@ -203,7 +203,7 @@ public class VenueHireSystem {
 
     // Make the booking (add to system's bookingList) and add it to the venue object's arraylist of bookings.
     bookingList.add(
-        new Booking(bookingReference, bookingVenue, bookingDate, clientEmail, numberOfAttendees)
+        new Booking(bookingReference, bookingVenue, bookingDate, systemDate, clientEmail, numberOfAttendees)
     );
     bookingVenue.addBooking(bookingList.get(bookingList.size()-1));
     
@@ -274,7 +274,10 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    // Print error message if booking reference doesn't exist.
+    if (findBooking(bookingReference) == null) {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+    }
   }
 
   // ***Methods implemented by me below:***
@@ -319,7 +322,7 @@ public class VenueHireSystem {
     return null;
   }
 
-  // Returns the venue that has the booking reference input.
+  // Returns the venue that has the booking reference input, or null if it couldn't find it.
   public Booking findBooking(String bookingReference) {
     // Iterate through each booking in bookingList and return the booking with the matching reference
     for (Booking booking : bookingList) {
@@ -333,6 +336,7 @@ public class VenueHireSystem {
   }
 
   // Prints error message if booking reference doesn't exist and returns false, returns true if found.
+  // To be used only when making a service.
   public boolean checkServiceBooking(String serviceType, String bookingReference) {
     if (findBooking(bookingReference) == null) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage(serviceType, bookingReference);

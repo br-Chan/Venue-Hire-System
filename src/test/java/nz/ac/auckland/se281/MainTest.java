@@ -982,6 +982,21 @@ public class MainTest {
       assertDoesNotContain("* Catering ", true);
       assertDoesNotContain("not added", true);
     }
+
+    @Test
+    public void T4_16_invoice_booking_doesnt_exist() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "27/03/2024", "client001@email.com", "230"), //
+              VIEW_INVOICE,
+              "ZP4HRCZ4"));
+
+      assertContains("Invoice not printed: there is no booking with reference 'ZP4HRCZ4' in the system.");
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =
