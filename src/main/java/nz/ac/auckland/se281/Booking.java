@@ -23,10 +23,12 @@ public class Booking {
     servicesAtBooking = new ArrayList<Service>();
   }
 
-  //TODO create more getters and setters
-
   public String getBookingReference() {
     return bookingReference;
+  }
+
+  public Venue getBookingVenue() {
+    return bookingVenue;
   }
 
   public SimpleDate getBookingDate() {
@@ -35,6 +37,14 @@ public class Booking {
   
   public SimpleDate getDateMade() {
     return dateMade;
+  }
+
+  public String getClientEmail() {
+    return clientEmail;
+  }
+
+  public int getNumerOfAttendees() {
+    return numberOfAttendees;
   }
 
   public ArrayList<Service> getServicesAtBooking() {

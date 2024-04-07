@@ -75,5 +75,9 @@ public class Venue {
     return false;
   }
 
+  @Override
+  public String toString() {
+    return venueName;
+  }
 
 }

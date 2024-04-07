@@ -274,10 +274,34 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
+    Booking booking = findBooking(bookingReference);
+
     // Print error message if booking reference doesn't exist.
-    if (findBooking(bookingReference) == null) {
+    if (booking == null) {
       MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+      return;
     }
+
+    // Print the top half of the invoice, including:
+    // booking reference, email, date of booking, party date, number of guests, venue
+    MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+        bookingReference,
+        booking.getClientEmail(),
+        booking.getDateMade().toString(),
+        booking.getBookingDate().toString(),
+        Integer.toString(booking.getNumerOfAttendees()),
+        booking.getBookingVenue().toString()
+    );
+
+    // Print the venue hire fee bullet point.
+    MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(
+        Integer.toString(booking.getBookingVenue().getHireFee())
+    );
+
+    // If there is/are catering, music or floral service(s), print their message(s).
+
+    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
+    // total cost
   }
 
   // ***Methods implemented by me below:***
