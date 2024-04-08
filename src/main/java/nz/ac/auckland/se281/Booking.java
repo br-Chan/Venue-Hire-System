@@ -43,7 +43,7 @@ public class Booking {
     return clientEmail;
   }
 
-  public int getNumerOfAttendees() {
+  public int getNumberOfAttendees() {
     return numberOfAttendees;
   }
 

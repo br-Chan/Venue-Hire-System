@@ -15,4 +15,12 @@ public class Catering extends Service {
     return cateringType;
   }
 
+  @Override
+  public void printInvoiceEntry(int numberOfAttendees) {
+    MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+        cateringType.getName(),
+        Integer.toString(cateringType.getCostPerPerson() * numberOfAttendees)
+    );
+  }
+
 }

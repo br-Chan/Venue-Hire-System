@@ -289,7 +289,7 @@ public class VenueHireSystem {
         booking.getClientEmail(),
         booking.getDateMade().toString(),
         booking.getBookingDate().toString(),
-        Integer.toString(booking.getNumerOfAttendees()),
+        Integer.toString(booking.getNumberOfAttendees()),
         booking.getBookingVenue().toString()
     );
 
@@ -299,6 +299,9 @@ public class VenueHireSystem {
     );
 
     // If there is/are catering, music or floral service(s), print their message(s).
+    for (Service service : booking.getServicesAtBooking()) {
+      service.printInvoiceEntry(booking.getNumberOfAttendees());
+    }
 
     MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
     // total cost
