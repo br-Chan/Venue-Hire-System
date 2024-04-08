@@ -16,12 +16,15 @@ public class Floral extends Service {
   }
 
   @Override
-  public void printInvoiceEntry(int numberOfAttendees) {
+  public int printInvoiceEntry(int numberOfAttendees) {
     // numberofAttendees is not used by the Floral class
+    int floralCost = floralType.getCost();
     MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
         floralType.getName(),
-        Integer.toString(floralType.getCost())
+        Integer.toString(floralCost)
     );
+
+    return floralCost;
   }
   
 }

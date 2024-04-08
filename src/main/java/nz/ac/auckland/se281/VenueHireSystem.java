@@ -275,6 +275,7 @@ public class VenueHireSystem {
 
   public void viewInvoice(String bookingReference) {
     Booking booking = findBooking(bookingReference);
+    int totalCost = 0; // Total cost to be printed in the invoice.
 
     // Print error message if booking reference doesn't exist.
     if (booking == null) {
@@ -293,18 +294,22 @@ public class VenueHireSystem {
         booking.getBookingVenue().toString()
     );
 
-    // Print the venue hire fee bullet point.
+    // Print the venue hire fee entry and add to the total cost.
+    int venueHireFee = booking.getBookingVenue().getHireFee();
+    totalCost += venueHireFee;
     MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(
-        Integer.toString(booking.getBookingVenue().getHireFee())
+        Integer.toString(venueHireFee)
     );
 
-    // If there is/are catering, music or floral service(s), print their message(s).
+
+    // Print service entries for every service at the booking and add to the total cost.
     for (Service service : booking.getServicesAtBooking()) {
-      service.printInvoiceEntry(booking.getNumberOfAttendees());
+      totalCost += service.printInvoiceEntry(booking.getNumberOfAttendees());
     }
 
-    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
-    // total cost
+    // Print the total cost of the booking and the bottom half of the invoice.
+    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
+
   }
 
   // ***Methods implemented by me below:***

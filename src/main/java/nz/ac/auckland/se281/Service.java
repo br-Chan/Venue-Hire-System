@@ -11,6 +11,7 @@ public abstract class Service {
     return serviceBooking;
   }
 
-  public abstract void printInvoiceEntry(int numberOfAttendees);
+  // Prints the invoice entry for the particular service and returns the cost of the service.
+  public abstract int printInvoiceEntry(int numberOfAttendees);
 
 }
