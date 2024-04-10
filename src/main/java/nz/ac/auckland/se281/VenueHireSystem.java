@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VenueHireSystem {
+  // Array lists for all total venues and bookings made in the system.
   private ArrayList<Venue> venueList;
   private ArrayList<Booking> bookingList;
 
@@ -130,7 +131,7 @@ public class VenueHireSystem {
   public void printSystemDate() {
     // if no prior system date set, print message saying date not set. Otherwise print the date.
     if (!systemDate.getIsSet()) {
-      MessageCli.CURRENT_DATE.printMessage("not set.");
+      MessageCli.CURRENT_DATE.printMessage("not set");
     } else {
       MessageCli.CURRENT_DATE.printMessage(systemDate.toString());
     }

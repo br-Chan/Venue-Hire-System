@@ -47,13 +47,16 @@ public class Venue {
   // Updates the next available date.
   // System date is an input parameter but not necessarily becomes the next available date.
   public void updateNextAvailableDate(SimpleDate systemDate) {
-    //Return with nextAvailableDate being the system date if there are no bookings.
+    // Return with nextAvailableDate being the system date if there are no bookings.
     if (bookingsAtVenue.size() == 0) {
       nextAvailableDate.changeTo(systemDate);
       return;
     }
 
-    //If the venue is booked on the system date, check the next day until not booked.
+    // Initially change the next available date to the system date.
+    nextAvailableDate.changeTo(systemDate);
+
+    // If the venue is booked on the system date, check the next day until not booked.
     while (this.isBookedOnDate(nextAvailableDate)) {
       nextAvailableDate.incrementDay();
     }

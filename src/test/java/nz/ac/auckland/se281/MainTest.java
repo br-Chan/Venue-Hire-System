@@ -997,6 +997,46 @@ public class MainTest {
 
       assertContains("Invoice not printed: there is no booking with reference 'ZP4HRCZ4' in the system.");
     }
+
+    @Test
+    public void T4_17_booking_next_available_date_updating_system_date_after_making_booking() throws Exception {
+      runCommands(
+          CREATE_VENUE,
+          "'Frugal Fiesta Hall'",
+          "FFH",
+          "80",
+          "250",
+          SET_DATE,
+          "03/02/2024",
+          MAKE_BOOKING,
+          options("FFH", "03/02/2024", "client001@email.com", "230"),
+          PRINT_VENUES,
+          SET_DATE,
+          "26/02/2024",
+          PRINT_VENUES,
+          SET_DATE,
+          "01/02/2024",
+          PRINT_VENUES,
+          SET_DATE,
+          "03/02/2024",
+          PRINT_VENUES);
+
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 04/02/2024");
+      assertContains("System date set to 26/02/2024.");
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 26/02/2024");
+      assertContains("System date set to 01/02/2024.");
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 01/02/2024");
+      assertContains("System date set to 03/02/2024.");
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 04/02/2024");
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =
