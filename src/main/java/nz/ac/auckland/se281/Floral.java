@@ -15,6 +15,7 @@ public class Floral extends Service {
     return floralType;
   }
 
+  // Overridden printInvoiceEntry method  from super class.
   @Override
   public int printInvoiceEntry(int numberOfAttendees) {
     // numberofAttendees is not used by the Floral class

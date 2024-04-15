@@ -76,11 +76,11 @@ public class SimpleDate {
 
   @Override
   public String toString() {
-    return
+    return(
         String.format("%02d", day) + "/" +
         String.format("%02d", month) + "/" +
         String.format("%04d", year)
-    ; 
+    ); 
   }
 
 }

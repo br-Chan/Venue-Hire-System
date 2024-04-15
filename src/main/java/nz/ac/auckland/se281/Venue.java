@@ -11,7 +11,12 @@ public class Venue {
   private SimpleDate nextAvailableDate;
 
   public Venue(
-      String venueName, String venueCode, int capacityInput, int hireFeeInput, SimpleDate systemDate) {
+      String venueName,
+      String venueCode,
+      int capacityInput,
+      int hireFeeInput,
+      SimpleDate systemDate
+  ) {
     this.venueName = venueName;
     this.venueCode = venueCode;
     this.capacity = capacityInput;

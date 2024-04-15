@@ -12,7 +12,12 @@ public class Booking {
   private ArrayList<Service> servicesAtBooking;
 
   public Booking(
-  String bookingReference, Venue bookingVenue, SimpleDate bookingDate, SimpleDate systemDate, String clientEmail, int numberOfAttendees
+      String bookingReference,
+      Venue bookingVenue,
+      SimpleDate bookingDate,
+      SimpleDate systemDate,
+      String clientEmail,
+      int numberOfAttendees
   ) {
     this.bookingReference = bookingReference;
     this.bookingVenue = bookingVenue;

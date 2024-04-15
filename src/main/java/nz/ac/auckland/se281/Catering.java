@@ -15,9 +15,12 @@ public class Catering extends Service {
     return cateringType;
   }
 
+  // Overridden printInvoiceEntry method  from super class.
   @Override
   public int printInvoiceEntry(int numberOfAttendees) {
+    // Calculate total cost of the catering service.
     int cateringCost = cateringType.getCostPerPerson() * numberOfAttendees;
+    
     MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
         cateringType.getName(),
         Integer.toString(cateringCost)

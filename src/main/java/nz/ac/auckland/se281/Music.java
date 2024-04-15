@@ -6,6 +6,7 @@ public class Music extends Service {
     super(serviceBooking);
   }
 
+  // Overridden printInvoiceEntry method  from super class.
   @Override
   public int printInvoiceEntry(int numberOfAttendees) {
     MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(

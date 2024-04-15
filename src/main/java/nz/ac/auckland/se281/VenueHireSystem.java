@@ -4,7 +4,6 @@ import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class VenueHireSystem {
   // Array lists for all total venues and bookings made in the system.
@@ -72,11 +71,11 @@ public class VenueHireSystem {
         nextAvailableDate = venueList.get(i).getNextAvailableDate().toString();
       }
       MessageCli.VENUE_ENTRY.printMessage(
-      venueList.get(i).getVenueName(),
-      venueList.get(i).getVenueCode(),
-      Integer.toString(venueList.get(i).getCapacity()),
-      Integer.toString(venueList.get(i).getHireFee()),
-      nextAvailableDate
+          venueList.get(i).getVenueName(),
+          venueList.get(i).getVenueCode(),
+          Integer.toString(venueList.get(i).getCapacity()),
+          Integer.toString(venueList.get(i).getHireFee()),
+          nextAvailableDate
       );
     }
   }
@@ -93,7 +92,8 @@ public class VenueHireSystem {
     // Print error message if venue code already exists in the system.
     if (findVenue(venueCode) != null) {
       MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(
-      venueCode, findVenue(venueCode).getVenueName()
+          venueCode,
+          findVenue(venueCode).getVenueName()
       );
       return;
     }
@@ -114,7 +114,12 @@ public class VenueHireSystem {
 
     // If all arguments are valid, create a new Venue object.
     venueList.add(new Venue(
-        venueName, venueCode, Integer.valueOf(capacityInput), Integer.valueOf(hireFeeInput), systemDate));
+        venueName,
+        venueCode,
+        Integer.valueOf(capacityInput),
+        Integer.valueOf(hireFeeInput),
+        systemDate
+    ));
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
 
   }
@@ -151,7 +156,10 @@ public class VenueHireSystem {
 
     // CONDITION 2: Booking date must not be in the past.
     if (bookingDate.compareWith(systemDate) == -1) {
-      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate.toString(), systemDate.toString());
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(
+          bookingDate.toString(),
+          systemDate.toString()
+      );
       return; // booking date is in the past.
     }
 
@@ -183,7 +191,7 @@ public class VenueHireSystem {
     int numberOfAttendees = Integer.valueOf(options[3]);
 
     // If attendees less than 25% or more than 100%, set them to 25% or 100% respectively.
-    int quarterOfCapacity = bookingVenue.getCapacity()/4;
+    int quarterOfCapacity = bookingVenue.getCapacity()/4;    
     if (numberOfAttendees < quarterOfCapacity) {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
           Integer.toString(numberOfAttendees),
@@ -203,16 +211,25 @@ public class VenueHireSystem {
     }
 
     // Make the booking (add to system's bookingList) and add it to the venue object's arraylist of bookings.
-    bookingList.add(
-        new Booking(bookingReference, bookingVenue, bookingDate, systemDate, clientEmail, numberOfAttendees)
-    );
+    bookingList.add(new Booking(
+        bookingReference,
+        bookingVenue,
+        bookingDate,
+        systemDate,
+        clientEmail,
+        numberOfAttendees
+    ));
+
     bookingVenue.addBooking(bookingList.get(bookingList.size()-1));
     
     // Update the venue's system date, now that a new booking has been added to it.
     bookingVenue.updateNextAvailableDate(systemDate);
 
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-        bookingReference, bookingVenue.getVenueName(), bookingDate.toString(), Integer.toString(numberOfAttendees)
+        bookingReference,
+        bookingVenue.getVenueName(),
+        bookingDate.toString(),
+        Integer.toString(numberOfAttendees)
     );
   }
 
@@ -247,7 +264,10 @@ public class VenueHireSystem {
       serviceBooking.addService(new Catering(serviceBooking, cateringType));
 
       // Print relevant success message.
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Catering (" + cateringType.getName() + ")", bookingReference);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+          "Catering (" + cateringType.getName() + ")",
+          bookingReference
+      );
     }
 
   }
@@ -270,7 +290,10 @@ public class VenueHireSystem {
       serviceBooking.addService(new Floral(serviceBooking, floralType));
 
       // Print relevant success message.
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Floral (" + floralType.getName() + ")", bookingReference);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+          "Floral (" + floralType.getName() + ")",
+          bookingReference
+      );
     }
   }
 
@@ -357,8 +380,9 @@ public class VenueHireSystem {
 
   // Returns the venue that has the booking reference input, or null if it couldn't find it.
   public Booking findBooking(String bookingReference) {
-    // Iterate through each booking in bookingList and return the booking with the matching reference
+    // Iterate through each booking in bookingList.
     for (Booking booking : bookingList) {
+      // Return the booking with the matching reference.
       if (booking.getBookingReference().equals(bookingReference)) {
         return booking;
       }
@@ -368,8 +392,8 @@ public class VenueHireSystem {
     return null;
   }
 
-  // Prints error message if booking reference doesn't exist and returns false, returns true if found.
-  // To be used only when making a service.
+  // Prints error message if booking reference doesn't exist and returns false, and
+  // Returns true if found. To be used only when making a service.
   public boolean checkServiceBooking(String serviceType, String bookingReference) {
     if (findBooking(bookingReference) == null) {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage(serviceType, bookingReference);
