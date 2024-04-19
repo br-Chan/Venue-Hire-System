@@ -191,7 +191,8 @@ public class VenueHireSystem {
     int numberOfAttendees = Integer.valueOf(options[3]);
 
     // If attendees less than 25% or more than 100%, set them to 25% or 100% respectively.
-    int quarterOfCapacity = bookingVenue.getCapacity()/4;    
+    int quarterOfCapacity = bookingVenue.getCapacity()/4;
+    
     if (numberOfAttendees < quarterOfCapacity) {
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
           Integer.toString(numberOfAttendees),
@@ -210,7 +211,7 @@ public class VenueHireSystem {
       
     }
 
-    // Make the booking (add to system's bookingList) and add it to the venue object's arraylist of bookings.
+    // Make the booking (add to system's bookingList).
     bookingList.add(new Booking(
         bookingReference,
         bookingVenue,
@@ -220,7 +221,10 @@ public class VenueHireSystem {
         numberOfAttendees
     ));
 
-    bookingVenue.addBooking(bookingList.get(bookingList.size()-1));
+    // Add the booking to the venue object's arraylist of bookings.
+    bookingVenue.addBooking(
+        bookingList.get(bookingList.size()-1)
+    );
     
     // Update the venue's system date, now that a new booking has been added to it.
     bookingVenue.updateNextAvailableDate(systemDate);

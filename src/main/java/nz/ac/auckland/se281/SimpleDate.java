@@ -45,6 +45,7 @@ public class SimpleDate {
 
   // Returns 0 if equal, -1 if this is in the past, 1 is this is in the future.
   public int compareWith(SimpleDate other) {
+    // Compare the year, then month, then day with the compare method.
     int yearsCompared = Integer.compare(this.year, other.year);
     if (yearsCompared != 0) {
       return yearsCompared;
@@ -77,8 +78,10 @@ public class SimpleDate {
   @Override
   public String toString() {
     return(
-        String.format("%02d", day) + "/" +
-        String.format("%02d", month) + "/" +
+        String.format("%02d", day) +
+        "/" +
+        String.format("%02d", month) +
+        "/" +
         String.format("%04d", year)
     ); 
   }
